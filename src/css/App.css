@@ -1,6 +1,10 @@
 * {
   box-sizing: border-box;
 }
+img {
+  max-width: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -200,6 +204,10 @@ li {
 }
 
 /* Question answered */
+.error-msg {
+  padding: 20px 10px 30px 10px;
+  font-size: 22px;
+}
 .result {
   display: flex;
   flex-direction: column;

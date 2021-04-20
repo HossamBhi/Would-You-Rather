@@ -2,7 +2,7 @@
 
 # For installation and launch
 
-use 'npm install' ,'yarn add react-redux redux-thunk react-router-dom react-redux-loading-bar' ,and 'npm start' 
+we just need to run npm install and npm start.
 
 ## Login page
 

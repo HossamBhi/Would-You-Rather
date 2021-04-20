@@ -16,16 +16,17 @@ import QuestionAnswer from "./QuestionAnswer";
 import Loadboard from "./Loadboard";
 
 class App extends Component {
+  state = {
+    authedUser: null,
+  };
+
   componentDidMount() {
-    this.props.dispatch(handleInitialData());
-    const { authedUser } = this.props;
-    if (authedUser === null) {
-      console.log("back");
-    }
+    this.props.handleInitialData();
   }
 
   render() {
     const { authedUser } = this.props;
+    const currentLocation = window.location.pathname;
 
     return (
       <Router>
@@ -35,7 +36,14 @@ class App extends Component {
             <Route exact path="/" component={Login} />
 
             {!authedUser ? (
-              <Redirect to="/" />
+              <Redirect
+                to={{
+                  pathname: "/",
+                  state: {
+                    referre: currentLocation,
+                  },
+                }}
+              />
             ) : (
               <Switch>
                 <Route path="/add" component={AddQuestion} />
@@ -56,4 +64,5 @@ function mapStateToProps({ authedUser }) {
     authedUser,
   };
 }
-export default connect(mapStateToProps)(App);
+
+export default connect(mapStateToProps, { handleInitialData })(App);

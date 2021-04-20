@@ -2,18 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink, withRouter } from "react-router-dom";
 import { logoutUser } from "../actions/authedUser";
+import { removeDataFromlocalStorage } from "../utils/storage";
 
 function Nav(props) {
-  const { authedUser, user, dispatch, history } = props;
+  const { authedUser, user, logoutUser, history } = props;
 
   function handleLogoutUser() {
-    dispatch(logoutUser());
+    logoutUser();
+    removeDataFromlocalStorage();
   }
+
   function checkAuthedUser() {
     if (authedUser === null) {
       history.push("/");
     }
   }
+
   return (
     <nav className="nav">
       <ul onClick={checkAuthedUser}>
@@ -64,4 +68,4 @@ function mapStateToProps({ authedUser, users }) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(Nav));
+export default withRouter(connect(mapStateToProps, { logoutUser })(Nav));

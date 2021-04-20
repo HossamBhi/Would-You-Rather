@@ -4,7 +4,7 @@ import logo from "../imgs/logo.png";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { setAuthedUser } from "../actions/authedUser";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 
 class Login extends Component {
   state = {
@@ -12,9 +12,13 @@ class Login extends Component {
   };
 
   handleLoginSubmit = (e) => {
-    this.props.dispatch(setAuthedUser(this.state.option));
-    this.props.history.push(`/questions`);
-    
+    const { setAuthedUser, history, location } = this.props;
+    setAuthedUser(this.state.option);
+    if (location.state && location.state.referre === "/") {
+      history.push(`/questions`);
+    } else {
+      history.push(location.state.referre);
+    }
   };
 
   handleChange = (value) => {
@@ -24,7 +28,10 @@ class Login extends Component {
   };
 
   render() {
-    const { users } = this.props;
+    const { users, authedUser, location } = this.props;
+    if (authedUser !== null && location.state) {
+      return <Redirect to={location.state.referre} />;
+    }
 
     let userOptions = [];
 
@@ -64,10 +71,11 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps({ users }) {
+function mapStateToProps({ users, authedUser }) {
   return {
     users,
+    authedUser,
   };
 }
 
-export default withRouter(connect(mapStateToProps)(Login));
+export default withRouter(connect(mapStateToProps, { setAuthedUser })(Login));

@@ -25,7 +25,7 @@ class AddQuestion extends Component {
   submitQuestion = (e) => {
     e.preventDefault();
     const { option1, option2 } = this.state;
-    const { authedUser, dispatch, history } = this.props;
+    const { authedUser, handleAddQuestion, history } = this.props;
 
     if (option1 === "") {
       alert("Enter option 1");
@@ -43,7 +43,7 @@ class AddQuestion extends Component {
     };
     history.push("/questions");
 
-    dispatch(handleAddQuestion(question));
+    handleAddQuestion(question);
   };
 
   render() {
@@ -84,4 +84,6 @@ function mapStateToProps({ authedUser }) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(AddQuestion));
+export default withRouter(
+  connect(mapStateToProps, { handleAddQuestion })(AddQuestion)
+);

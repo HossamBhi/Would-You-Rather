@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 
@@ -11,7 +11,7 @@ function Question(props) {
   }
 
   return (
-    <Fragment>
+    <>
       <div className="header-container">
         <h3>{user.name} asks:</h3>
       </div>
@@ -31,7 +31,7 @@ function Question(props) {
           </button>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 }
 
